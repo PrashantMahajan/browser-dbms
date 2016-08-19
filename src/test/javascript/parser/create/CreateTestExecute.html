@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>ParseTestIdentifyQueryType - Syntax</title>
+		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
+	 	<script type="text/javascript" src="./../../../../main/javascript/parser/ParseController.js"></script>
+	 	<script type="text/javascript" src="./../../../../main/javascript/parser/create/CreateController.js"></script>
+		<script type="text/javascript" src="./../../../../main/javascript/parser/create/CreateFuncExecute.js"></script>
+	</head>
+	
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+		<script src="https://code.jquery.com/qunit/qunit-2.0.1.js"></script>
+		<script type="text/javascript">
+			/**
+			 * Test case for testing the Query Identification code
+			 */
+			function CreateTestExecute () {
+				let v_ctlr;
+				v_ctlr = new CreateController();
+				document.title = 'ParseTestExecute - Syntax';
+				QUnit.test(document.title, function(assert) {
+					v_ctlr.execute("CREATE  TABLe Test (col1, col2, col3);");
+					assert.ok(1 == 1, "Pass!");
+				});
+			}
+			CreateTestExecute ();
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>ParseTestIdentifyQueryType - Syntax</title>
+		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
+	 	<script type="text/javascript" src="./../../../main/javascript/parser/ParseController.js"></script>
+		<script type="text/javascript" src="./../../../main/javascript/parser/ParseFuncIdentifyQueryType.js"></script>
+	</head>
+	
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+		<script src="https://code.jquery.com/qunit/qunit-2.0.1.js"></script>
+		<script type="text/javascript">
+			/**
+			 * Test case for testing the Query Identification code
+			 */
+			function ParseTestIdentifyQueryType () {
+				let v_ctlr;
+				v_ctlr = new ParseController();
+				document.title = 'ParseTestIdentifyQueryType - Syntax';
+				QUnit.test(document.title, function(assert) {
+					assert.ok(ParseController.SELECT == v_ctlr.identifyQueryType("Select 1"), "Pass!");
+					assert.ok(ParseController.CREATE == v_ctlr.identifyQueryType("Create Table Session (sessionId, logintime, logouttime, recordCreateTime);"), "Pass!");
+					assert.ok(ParseController.CREATE == v_ctlr.identifyQueryType(" \n\n\n\n Create Table Session (sessionId, logintime, logouttime, recordCreateTime);"), "Pass!");
+					assert.ok(ParseController.DELETE == v_ctlr.identifyQueryType("DELETE From Session where sessionId = 1"), "Pass!");
+					assert.ok(ParseController.DELETE == v_ctlr.identifyQueryType("\t\t\n\n \n\n\n\n      DELETE From Session where sessionId = 1"), "Pass!");
+					assert.ok(ParseController.INSERT == v_ctlr.identifyQueryType("INSERT INTO Session values(1, '2016-01-01', '2016-02-02', '2016-01-10')"), "Pass!");
+					assert.ok(ParseController.UPDATE == v_ctlr.identifyQueryType("UPDATE Session set logoutTime = '2016-03-01' where sessionId = 1"), "Pass!");
+					assert.notOk(ParseController.UPDATE == v_ctlr.identifyQueryType("UPDTE Session set logoutTime = '2016-03-01' where sessionId = 1"), "Pass!");
+					assert.notOk(ParseController.UPDATE == v_ctlr.identifyQueryType("UPdTr Session set logoutTime = '2016-03-01' where sessionId = 1"), "Pass!");
+				});
+			}
+			ParseTestIdentifyQueryType ();
+		</script>
+	</body>
+
+</html>
