@@ -20,11 +20,13 @@
 			 */
 			function CreateTestExecute () {
 				let v_ctlr;
+				let v_hResults;
 				v_ctlr = new CreateController();
 				document.title = 'ParseTestExecute - Syntax';
 				QUnit.test(document.title, function(assert) {
-					v_ctlr.execute("CREATE  TABLe Test (col1, col2, col3);");
-					assert.ok(1 == 1, "Pass!");
+					v_hResults = v_ctlr.execute("CREATE  TABLe Test (col1, col2, col3);");
+					assert.ok(null != v_hResults, "Pass!");
+					console.log(v_hResults);
 				});
 			}
 			CreateTestExecute ();

@@ -15,6 +15,7 @@ function CreateFuncExecute () {
 CreateFuncExecute.TABLE = "table";
 
 CreateFuncExecute.prototype.getResult = function () {
+	Object.freeze(this.g_Return);
 	return this.g_Return;
 };
 
@@ -36,10 +37,18 @@ CreateFuncExecute.prototype.startFunction = function () {
 };
 
 CreateFuncExecute.prototype.createSQLTable = function () {
+	let v_iItr;
 	let v_sKey;
+	let v_objRow;
 	try {
 		v_sKey = "browserdb.meta." + window.location.hostname + "." + this.g_sTableName + ".definition";
 		localStorage[v_sKey] = this.g_arrAllColumns;
+		this.g_Return = [];
+		v_objRow = {};
+		this.g_Return.push(v_objRow);
+		for (v_iItr in this.g_arrAllColumns) {
+			v_objRow[this.g_arrAllColumns[v_iItr]] = null;
+		}
 	} catch (v_exException) {
 		this.log(v_exException);
 	}

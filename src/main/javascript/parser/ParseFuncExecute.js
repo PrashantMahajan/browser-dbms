@@ -12,6 +12,7 @@ function ParseFuncExecute () {
  * Returns the Result
  */
 ParseFuncIdentifyQueryType.prototype.getResult = function () {
+	Object.freeze(this.g_sReturn);
 	return this.g_sReturn;
 };
 
@@ -36,7 +37,7 @@ ParseFuncIdentifyQueryType.prototype.startFunction = function () {
 		v_sTypeOfQuery = this.g_objController.identifyQueryType(this.g_sSQL);
 		switch (v_sTypeOfQuery) {
 		case ParseController.INSERT:
-			this.g_objController.executeCreateStatement(this.g_sSQL);
+			this.g_sReturn = new InsertController().execute(this.g_sSQL);
 			break;
 		case ParseController.DELETE:
 			this.g_objController.executeCreateStatement(this.g_sSQL);
