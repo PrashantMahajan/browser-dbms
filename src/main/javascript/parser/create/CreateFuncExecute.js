@@ -10,6 +10,7 @@ function CreateFuncExecute () {
 	this.g_Return;
 	this.g_sTableName;
 	this.g_arrAllColumns = [];
+	this.g_objCreateController;
 }
 
 CreateFuncExecute.TABLE = "table";
@@ -102,10 +103,10 @@ CreateFuncExecute.prototype.trim = function (prm_sString) {
 	} else {
 		return ("" + prm_sString).replace(/^\s+|\s+$/gm, '');
 	}
-}
+};
 
 CreateFuncExecute.prototype.log = function (prm_sMesssage) {
 	if (console) {
 		console.log(prm_sMesssage);
 	}
-}
+};

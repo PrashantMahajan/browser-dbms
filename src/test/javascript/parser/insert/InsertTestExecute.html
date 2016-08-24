@@ -6,8 +6,8 @@
 		<title>ParseTestIdentifyQueryType - Syntax</title>
 		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
 	 	<script type="text/javascript" src="./../../../../main/javascript/parser/ParseController.js"></script>
-	 	<script type="text/javascript" src="./../../../../main/javascript/parser/create/CreateController.js"></script>
-		<script type="text/javascript" src="./../../../../main/javascript/parser/create/CreateFuncExecute.js"></script>
+	 	<script type="text/javascript" src="./../../../../main/javascript/parser/insert/InsertController.js"></script>
+		<script type="text/javascript" src="./../../../../main/javascript/parser/insert/InsertFuncExecute.js"></script>
 	</head>
 	
 	<body>
@@ -21,11 +21,13 @@
 			function CreateTestExecute () {
 				let v_ctlr;
 				let v_hResults;
-				v_ctlr = new CreateController();
-				document.title = 'CreateTestExecute - Syntax';
+				v_ctlr = new InsertController();
+				document.title = 'InsertTestExecute - Syntax';
 				QUnit.test(document.title, function(assert) {
-					v_hResults = v_ctlr.execute("CREATE  TABLe Test (col1, col2, col3);");
-					assert.ok(null != v_hResults, "Pass!");
+					v_hResults = v_ctlr.execute("Inserty intos  Test (col1, col2, col3);");
+					assert.notOk(null != v_hResults, "False!");
+					v_hResults = v_ctlr.execute("Insert into  Test (col1, col2, col3);");
+					assert.ok(null != v_hResults, "False!");
 					console.log(v_hResults);
 				});
 			}
