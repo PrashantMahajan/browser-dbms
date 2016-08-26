@@ -32,7 +32,7 @@ InsertController.prototype.execute = function (prm_sSQL) {
 /**
  * Internal Functioncall to find the Data in the sql query
  */
-InsertController.prototype.findTheDataInSQL = function (prm_sSQL, prm_sParsedSQL) {
+InsertController.prototype.findTheDataInSQL = function (prm_sSQL, prm_sParsedSQL, prm_arrColumns) {
 	let v_Return;
 	let v_fnExecute;
 	try {
@@ -40,6 +40,7 @@ InsertController.prototype.findTheDataInSQL = function (prm_sSQL, prm_sParsedSQL
 		v_fnExecute.setController(this);
 		v_fnExecute.setQuery(prm_sSQL);
 		v_fnExecute.setParsedSQL(prm_sParsedSQL);
+		v_fnExecute.setColumns(prm_arrColumns);
 		v_fnExecute.startFunction();
 		v_Return = v_fnExecute.getResult();
 	} catch (v_exException) {

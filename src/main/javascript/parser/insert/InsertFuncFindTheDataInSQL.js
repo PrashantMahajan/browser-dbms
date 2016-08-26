@@ -4,11 +4,13 @@
  */
 function InsertFuncFindTheDataInSQL () {
 	this.g_arrReturn = [];
+	this.g_Return = [];
 	this.g_objInsertController = null;
 	this.trim = null;
 	this.log = null;
 	this.g_sSQL = null;
 	this.g_sParsedSQL = null;
+	this.g_arrColumns = null;
 }
 
 InsertFuncFindTheDataInSQL.VALUE_SQL = 1;
@@ -22,7 +24,31 @@ InsertFuncFindTheDataInSQL.prototype.setController = function (prm_objInsertCont
 };
 
 InsertFuncFindTheDataInSQL.prototype.getResult = function () {
-	return this.g_arrReturn;
+	if (this.g_arrReturn.length > 0) {
+		this.processOutput();
+		return this.g_Return;
+	} else {
+		this.g_arrReturn;
+	}
+};
+
+InsertFuncFindTheDataInSQL.prototype.processOutput = function () {
+	let v_iI;
+	let v_iJ;
+	let v_row;
+	let v_hRow;
+	if (null == this.g_arrColumns) {
+	} else if (this.g_arrColumns.length == 0) {
+	} else {
+		for (v_iI in this.g_arrReturn) {
+			v_row = this.g_arrReturn[v_iI];
+			v_hRow = {};
+			for (v_iJ in this.g_arrColumns) {
+				v_hRow[this.g_arrColumns[v_iJ]] = v_row[v_iJ];
+			}
+			this.g_Return.push(v_hRow);
+		}
+	}
 };
 
 InsertFuncFindTheDataInSQL.prototype.setQuery = function (prm_sSQL) {
@@ -31,6 +57,10 @@ InsertFuncFindTheDataInSQL.prototype.setQuery = function (prm_sSQL) {
 
 InsertFuncFindTheDataInSQL.prototype.setParsedSQL = function (prm_sParsedSQL) {
 	this.g_sParsedSQL = prm_sParsedSQL;
+};
+
+InsertFuncFindTheDataInSQL.prototype.setColumns = function (prm_arrColumns) {
+	this.g_arrColumns = prm_arrColumns;
 };
 
 InsertFuncFindTheDataInSQL.prototype.startFunction = function () {
@@ -102,7 +132,7 @@ InsertFuncFindTheDataInSQL.prototype.findDataForSimpleValueSQL = function () {
 		v_sValues = this.trim(v_sValues);
 		v_sValues = v_sValues.replace(/\(/g, "[");
 		v_sValues = v_sValues.replace(/\)/g, "]");
-		this.g_arrReturn = JSON.parse(v_sValues);
+		this.g_arrReturn = JSON.parse("[" + v_sValues + "]");
 	} catch (v_exException) {
 		this.log(v_exException);
 	}

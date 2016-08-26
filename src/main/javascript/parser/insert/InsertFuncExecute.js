@@ -152,7 +152,7 @@ InsertFuncExecute.prototype.getTheColumnSequence = function () {
 };
 
 InsertFuncExecute.prototype.findTheData = function () {
-	this.g_arrData = this.g_objInsertController.findTheDataInSQL(this.g_sSQL, this.g_sLowerCaseSQL);
+	this.g_arrData = this.g_objInsertController.findTheDataInSQL(this.g_sSQL, this.g_sLowerCaseSQL, this.g_arrAllColumns);
 }
 
 
