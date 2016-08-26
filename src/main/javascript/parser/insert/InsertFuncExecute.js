@@ -9,7 +9,11 @@ function InsertFuncExecute () {
 	this.g_sLowerCaseSQL;
 	this.g_Return;
 	this.g_sTableName;
+	this.trim = null;
+	this.log = null;
+	this.g_objInsertController;
 	this.g_arrAllColumns = [];
+	this.g_arrData = [];
 }
 
 InsertFuncExecute.prototype.getResult = function () {
@@ -22,8 +26,10 @@ InsertFuncExecute.prototype.setQuery = function (prm_sSQL) {
 	this.g_sLowerCaseSQL = this.g_sSQL.toLowerCase();
 };
 
-InsertFuncExecute.prototype.setController = function (prm_objCreatController) {
-	this.g_objCreateController = prm_objCreatController;
+InsertFuncExecute.prototype.setController = function (prm_objInsertontroller) {
+	this.g_objInsertController = prm_objInsertontroller;
+	this.trim = this.g_objInsertController.trim;
+	this.log = this.g_objInsertController.log;
 };
 
 InsertFuncExecute.prototype.startFunction = function () {
@@ -117,6 +123,8 @@ InsertFuncExecute.prototype.getTheColumnSequence = function () {
 		let v_sColumns;
 		v_iPosition = v_ptrThis.g_sLowerCaseSQL.indexOf(")");
 		v_sColumns = v_ptrThis.g_sLowerCaseSQL.substring(1, v_iPosition);
+		v_ptrThis.g_sLowerCaseSQL = v_ptrThis.g_sLowerCaseSQL.substring(v_iPosition + 1);
+		v_ptrThis.g_sLowerCaseSQL  = v_ptrThis.trim(v_ptrThis.g_sLowerCaseSQL);
 		v_arrSQLColumns = v_sColumns.split(",");
 	};
 
@@ -133,7 +141,7 @@ InsertFuncExecute.prototype.getTheColumnSequence = function () {
 				throw("Column : " + v_sColumnName + " is not found in the Table definition");
 			}
 		}
-	};	
+	};
 
 	v_ptrThis = this;
 	v_fnGetDefaultSequence();
@@ -143,16 +151,8 @@ InsertFuncExecute.prototype.getTheColumnSequence = function () {
 	}	
 };
 
-InsertFuncExecute.prototype.trim = function (prm_sString) {
-	if (null == prm_sString) {
-		return null;
-	} else {
-		return ("" + prm_sString).replace(/^\s+|\s+$/gm, '');
-	}
-};
+InsertFuncExecute.prototype.findTheData = function () {
+	this.g_arrData = this.g_objInsertController.findTheDataInSQL(this.g_sSQL, this.g_sLowerCaseSQL);
+}
 
-InsertFuncExecute.prototype.log = function (prm_sMesssage) {
-	if (console) {
-		console.log(prm_sMesssage);
-	}
-};
+

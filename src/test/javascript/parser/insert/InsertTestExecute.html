@@ -8,6 +8,7 @@
 	 	<script type="text/javascript" src="./../../../../main/javascript/parser/ParseController.js"></script>
 	 	<script type="text/javascript" src="./../../../../main/javascript/parser/insert/InsertController.js"></script>
 		<script type="text/javascript" src="./../../../../main/javascript/parser/insert/InsertFuncExecute.js"></script>
+		<script type="text/javascript" src="./../../../../main/javascript/parser/insert/InsertFuncFindTheDataInSQL.js"></script>
 	</head>
 	
 	<body>
@@ -27,6 +28,10 @@
 					v_hResults = v_ctlr.execute("Inserty intos  Test (col1, col2, col3);");
 					assert.notOk(null != v_hResults, "False!");
 					v_hResults = v_ctlr.execute("Insert into  Test (col1, col2, col3);");
+					assert.ok(null != v_hResults, "False!");
+					v_hResults = v_ctlr.execute("Insert into  Test (col1, col2, col3) values (1,2,3)");
+					assert.ok(null != v_hResults, "False!");
+					v_hResults = v_ctlr.execute("Insert into  Test (col1, col2, col3) values (1,2,3) UNION (2,3,4)");
 					assert.ok(null != v_hResults, "False!");
 					console.log(v_hResults);
 				});
