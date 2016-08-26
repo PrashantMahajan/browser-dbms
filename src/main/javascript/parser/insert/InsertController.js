@@ -33,7 +33,7 @@ InsertController.prototype.execute = function (prm_sSQL) {
  * Internal Functioncall to find the Data in the sql query
  */
 InsertController.prototype.findTheDataInSQL = function (prm_sSQL, prm_sParsedSQL, prm_arrColumns) {
-	let v_Return;
+	let v_Return = [];
 	let v_fnExecute;
 	try {
 		v_fnExecute = new InsertFuncFindTheDataInSQL();
@@ -48,6 +48,7 @@ InsertController.prototype.findTheDataInSQL = function (prm_sSQL, prm_sParsedSQL
 			console.log(v_exException);			
 		}
 	}
+	return v_Return;
 };
 
 InsertController.prototype.trim = function (prm_sString) {

@@ -11,26 +11,26 @@ function ParseFuncExecute () {
 /**
  * Returns the Result
  */
-ParseFuncIdentifyQueryType.prototype.getResult = function () {
+ParseFuncExecute.prototype.getResult = function () {
 	Object.freeze(this.g_sReturn);
 	return this.g_sReturn;
 };
 
-ParseFuncIdentifyQueryType.prototype.setController = function (prm_objParseController) {
+ParseFuncExecute.prototype.setController = function (prm_objParseController) {
 	this.g_objController = prm_objParseController;
 }
 
 /**
  * Sets the Query String 
  */
-ParseFuncIdentifyQueryType.prototype.setQuery = function (prm_sSQL) {
+ParseFuncExecute.prototype.setQuery = function (prm_sSQL) {
 	this.g_sSQL = ("" + prm_sSQL).replace(/^\s+|\s+$/gm, '');
 };
 
 /**
  * Executes the Function Call
  */
-ParseFuncIdentifyQueryType.prototype.startFunction = function () {
+ParseFuncExecute.prototype.startFunction = function () {
 	let v_sTypeOfQuery;
 	let v_objCreateController;
 	try {

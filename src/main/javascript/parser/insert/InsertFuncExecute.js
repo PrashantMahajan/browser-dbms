@@ -7,7 +7,7 @@ function InsertFuncExecute () {
 	this.g_sKey;
 	this.g_sSQL;
 	this.g_sLowerCaseSQL;
-	this.g_Return;
+	this.g_Return = null;
 	this.g_sTableName;
 	this.trim = null;
 	this.log = null;
@@ -35,7 +35,34 @@ InsertFuncExecute.prototype.setController = function (prm_objInsertontroller) {
 InsertFuncExecute.prototype.startFunction = function () {
 	try {
 		this.parseSQL();
-		this.insertData();
+	} catch (v_exException) {
+		this.log(v_exException);
+	}
+};
+
+InsertFuncExecute.prototype.insertData = function () {
+	let v_sKey;
+	let v_sEarlierData;
+	let v_arrRows = [];
+	try {
+		if (null == this.g_arrData) {
+		} else if (0 == this.g_arrData) {
+		} else {
+			v_sKey = "browserdb.meta." + window.location.hostname + "." + this.g_sTableName + ".data";
+			v_sEarlierData = localStorage[v_sKey];
+			if (null != v_sEarlierData) {
+				v_arrRows = JSON.parse(v_sEarlierData);
+				if (v_arrRows.length == 0) {
+					v_arrRows = this.g_arrData;
+				} else {
+					v_arrRows = v_arrRows.concat(this.g_arrData);
+				}
+			} else {
+				v_arrRows = this.g_arrData;
+			}
+			localStorage[v_sKey] = JSON.stringify(v_arrRows);
+			this.g_Return = v_arrRows;
+		}
 	} catch (v_exException) {
 		this.log(v_exException);
 	}
@@ -48,7 +75,7 @@ InsertFuncExecute.prototype.parseSQL = function () {
 		if(this.checkIfTheTableExists()) {
 			this.getTheColumnSequence();
 			this.findTheData();
-			this.insertTheData();
+			this.insertData();
 		} else {
 			this.log("The specified table : " + this.g_sTableName + " doesn't exist in the local Database");
 		}
