@@ -37,7 +37,11 @@ ParseFuncExecute.prototype.startFunction = function () {
 		v_sTypeOfQuery = this.g_objController.identifyQueryType(this.g_sSQL);
 		switch (v_sTypeOfQuery) {
 		case ParseController.INSERT:
-			this.g_sReturn = new InsertController().execute(this.g_sSQL);
+			if (InsertController) {
+				this.g_sReturn = new InsertController().execute(this.g_sSQL);
+			} else {
+				this.log("InsertController not defined - please include the JS file");
+			}
 			break;
 		case ParseController.DELETE:
 			this.g_objController.executeCreateStatement(this.g_sSQL);
@@ -46,18 +50,30 @@ ParseFuncExecute.prototype.startFunction = function () {
 			this.g_objController.executeCreateStatement(this.g_sSQL);
 			break;
 		case ParseController.SELECT:
-			this.g_objController.executeCreateStatement(this.g_sSQL);
+			if (SelectController) {
+				this.g_sReturn = new SelectController().execute(this.g_sSQL);
+			} else {
+				this.log("SelectController not defined - please include the JS file");
+			}
 			break;
 		case ParseController.CREATE:
-			this.g_sReturn = new CreateController().execute(this.g_sSQL);
+			if (CreateController) {
+				this.g_sReturn = new CreateController().execute(this.g_sSQL);
+			} else {
+				this.log("CreateController not defined - please include the JS file");
+			}
 			break;
 		default:
 			throw "Syntax not supported";
 			break;
 		}
 	} catch (v_exException) {
-		if (console) {
-			console.log(v_exException);			
-		}
+		this.log(v_exException);
+	}
+};
+
+ParseFuncExecute.prototype.log = function (prm_sMessage) {
+	if (console) {
+		console.log(prm_sMessage);			
 	}
 };
