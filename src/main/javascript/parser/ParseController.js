@@ -1,6 +1,7 @@
 /**
  * This class handles the SQL parsing and associates the correct class to perform the final deed.
  * @author Prashant
+ *
  */
 function ParseController () {
 }
